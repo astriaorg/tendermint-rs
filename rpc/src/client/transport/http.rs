@@ -361,9 +361,12 @@ mod sealed {
             R: SimpleRequest<S>,
             S: Dialect,
         {
+            std::println!("performing request");
             let request = self.build_request(request)?;
             let response = self.inner.request(request).await.map_err(Error::hyper)?;
+            std::println!("response: {:?}", response);
             let response_body = response_to_string(response).await?;
+            std::println!("response body: {:?}", response_body);
             tracing::debug!("Incoming response: {}", response_body);
             R::Response::from_string(&response_body).map(Into::into)
         }

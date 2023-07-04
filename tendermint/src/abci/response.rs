@@ -107,3 +107,12 @@ pub enum SnapshotResponse {
     #[doc = include_str!("doc/response-applysnapshotchunk.md")]
     ApplySnapshotChunk(ApplySnapshotChunk),
 }
+
+// use serde::Serializer;
+
+// fn serialize_int_to_str<S>(x: &i64, s: S) -> Result<S::Ok, S::Error>
+// where
+//     S: Serializer,
+// {
+//     s.serialize_str(&x.to_string())
+// }

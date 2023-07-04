@@ -24,8 +24,10 @@ pub struct DeliverTx {
     /// **May be non-deterministic**.
     pub info: String,
     /// Amount of gas requested for the transaction.
+    //#[serde(serialize_with = "super::serialize_int_to_str")]
     pub gas_wanted: i64,
     /// Amount of gas consumed by the transaction.
+    //#[serde(serialize_with = "super::serialize_int_to_str")]
     pub gas_used: i64,
     /// Events that occurred while executing the transaction.
     pub events: Vec<Event>,
