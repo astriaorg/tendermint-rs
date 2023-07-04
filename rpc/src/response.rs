@@ -10,10 +10,8 @@ use crate::{response_error::ResponseError, Error, Id, Version};
 pub trait Response: Serialize + DeserializeOwned + Sized {
     /// Parse a JSON-RPC response from a JSON string
     fn from_string(response: impl AsRef<[u8]>) -> Result<Self, Error> {
-        std::println!("response from_string: {:?}", response.as_ref());
         let wrapper: Wrapper<Self> =
             serde_json::from_slice(response.as_ref()).map_err(Error::serde)?;
-        std::println!("response from_slice ok");
         wrapper.into_result()
     }
 
