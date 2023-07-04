@@ -303,7 +303,7 @@ impl BlockIdFlag {
         }
     }
     /// Creates an enum from field names used in the ProtoBuf definition.
-    pub fn _name(value: &str) -> ::core::option::Option<Self> {
+    pub fn from_str_name(value: &str) -> ::core::option::Option<Self> {
         match value {
             "BLOCK_ID_FLAG_UNKNOWN" => Some(Self::Unknown),
             "BLOCK_ID_FLAG_ABSENT" => Some(Self::Absent),
