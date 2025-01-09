@@ -8,7 +8,7 @@ use core::{
 
 use bytes::Bytes;
 use serde::{de::Error as _, Deserialize, Deserializer, Serialize, Serializer};
-use subtle_encoding::{Encoding, Hex};
+use subtle_encoding::{base64, Encoding, Hex};
 use tendermint_proto::Protobuf;
 
 use crate::{error::Error, prelude::*};
@@ -254,6 +254,12 @@ impl AppHash {
             .map_err(Error::subtle_encoding)?;
         Ok(AppHash(h))
     }
+
+    /// Decode a `Hash` from base64-encoded string
+    pub fn from_base64(s: &str) -> Result<Self, Error> {
+        let h = base64::decode(s).map_err(Error::subtle_encoding)?;
+        Ok(AppHash(h))
+    }
 }
 
 impl AsRef<[u8]> for AppHash {
@@ -286,6 +292,6 @@ impl FromStr for AppHash {
     type Err = Error;
 
     fn from_str(s: &str) -> Result<Self, Error> {
-        Self::from_hex_upper(s)
+        Self::from_hex_upper(s).or_else(|_| Self::from_base64(s))
     }
 }
